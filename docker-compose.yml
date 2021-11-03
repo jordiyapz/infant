@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  infant:
+    image: infant
+    build:
+      context: .
+      dockerfile: ./Dockerfile
