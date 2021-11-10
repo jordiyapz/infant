@@ -1,5 +1,7 @@
-.env
+.env/
 .vscode
+
+.env.*
 
 **/*.egg-info
 **/*.pyc
