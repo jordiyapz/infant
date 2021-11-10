@@ -3,16 +3,15 @@ import requests
 import torch
 import urllib
 from torchvision.io import decode_png
-from promise import Promise
 from time import sleep
 import asyncio
-from asyncio import Future
-
+import numpy as np
 def data_uri_to_state(data_uri):
     '''Convert data_uri to state.'''
     res = urllib.request.urlopen(data_uri)
     raw_image:bytes = res.file.read()
-    tensor = torch.frombuffer(raw_image, dtype=torch.uint8)
+    tensor = torch.frombuffer(np.array(raw_image), 
+                              dtype=torch.uint8)
     state = decode_png(tensor)[:3]  # iqnore last alpha channel as it always full
 
     return state
