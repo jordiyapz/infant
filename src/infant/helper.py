@@ -5,7 +5,8 @@ def create_responder(agent: Agent, action_multiplier=20):
     def responder(observation: T.Tensor, reward: T.Tensor, env: Environment):
         """Get observation and returns action"""
         if reward > 0:
-            print('Reward: ', reward)
+            # print('Reward: ', reward)
+            env.total_reward += reward
         try:
             # Preprocess image
             image = observation / 255
@@ -14,6 +15,7 @@ def create_responder(agent: Agent, action_multiplier=20):
             # Train the agent
             if env.prev_state != None:
                 try:
+                    # print(f'Timestep: {env._episode_ct}')
                     agent.train(env.prev_state, reward, state, env._is_done)
                 except Exception as e:
                     print('Training Error')

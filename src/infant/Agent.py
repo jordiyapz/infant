@@ -6,9 +6,9 @@ from typing import Tuple
 from infant.util import prefer_gpu
 
 class ConvNetModel(nn.Module):
-    def __init__(self, output_dims=1024):
+    def __init__(self, output_dims=1024, device=None):
         super(ConvNetModel, self).__init__()
-        self.device = prefer_gpu()
+        self.device = device or prefer_gpu()
 
         self.conv_layer = nn.Sequential(
             nn.Conv2d(3, 32, kernel_size=9, stride=2),
@@ -24,6 +24,7 @@ class ConvNetModel(nn.Module):
             nn.Linear(16920, output_dims),
             nn.ReLU(),
         ).to(self.device)
+
     def forward(self, x:T.Tensor):
         x = self.conv_layer(x.to(prefer_gpu()))
         x = self.bottleneck(x)
